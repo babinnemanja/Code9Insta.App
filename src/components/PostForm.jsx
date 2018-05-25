@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
@@ -23,7 +22,7 @@ class PostForm extends React.Component {
     handleChange(e) {
         const { id, value, type } = e.target;
         this.setState({ [id]: value });
-        if (type == 'file') {
+        if (type === 'file') {
             this.readFile(e.target.files[0]);
         }
     }
@@ -52,7 +51,7 @@ class PostForm extends React.Component {
         reader.readAsArrayBuffer(file);
     }
     upload() {
-        const { image, imageFile, tags, description } = this.state;
+        const { imageFile, tags, description } = this.state;
         const user = JSON.parse(localStorage.getItem('user'));
 
         const data = {
@@ -60,8 +59,6 @@ class PostForm extends React.Component {
             Tags: _.split(tags, ' '),
             Description: description
         };
-        console.log(data);
-        console.log(JSON.stringify(data));
 
         const requestOptions = {
             method: 'POST',
@@ -81,7 +78,7 @@ class PostForm extends React.Component {
             })
             .then(message => {
                 NotificationManager.success(message);
-                //this.props.history.push('/login');
+                this.props.history.push('/profile');
             })
             .catch(response => {
                 NotificationManager.error(response.message || response.statusText);
@@ -89,7 +86,6 @@ class PostForm extends React.Component {
             });
     }
     render() {
-        console.log("Upload: ", this.state);
         const { image, tags, description, submitted } = this.state;
         return (
             <div>
@@ -121,7 +117,7 @@ class PostForm extends React.Component {
                             onChange={this.handleChange}
                         />
                     </FormGroup>
-                    <Button type="submit" disabled={submitted}>Upload</Button>
+                    <Button type="submit" disabled={submitted} className="btn-insta" block>Upload</Button>
                 </form>
             </div>
         );

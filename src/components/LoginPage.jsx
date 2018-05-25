@@ -1,21 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Panel } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { Grid, Row, Panel, Button } from 'react-bootstrap';
 import Header from './Header';
 import LoginForm from './LoginForm'
 
 class LoginPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleLinkClick = this.handleLinkClick.bind(this);
+    }
+    handleLinkClick(e) {
+        e.preventDefault();
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div>
                 <Header />
-                <Panel>
-                    <Panel.Body>
-                        <LoginForm />
-                    </Panel.Body>
-                </Panel>
+                <Grid fluid={true}>
+                    <Row>
+                        <Panel className="panel-insta">
+                            <Panel.Body>
+                                <LoginForm />
+                            </Panel.Body>
+                        </Panel>
+                    </Row>
+                    <Row>
+                        <Panel className="panel-insta">
+                            <Panel.Body>
+                                <div className="text-center">
+                                    Don't have an account?
+                                    <Button bsStyle="link" onClick={this.handleLinkClick}>Sign up</Button>
+                                </div>
+                            </Panel.Body>
+                        </Panel>
+                    </Row>
+                </Grid>
             </div>
         );
     }
 }
-export default LoginPage;
+export default withRouter(LoginPage);

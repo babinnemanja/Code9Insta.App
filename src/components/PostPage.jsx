@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Panel } from 'react-bootstrap';
 import Header from './Header';
 import PostForm from './PostForm'
@@ -9,7 +8,7 @@ class PostPage extends React.Component {
         return (
             <div>
                 <Header />
-                <Panel>
+                <Panel className="panel-insta">
                     <Panel.Body>
                         <PostForm />
                     </Panel.Body>

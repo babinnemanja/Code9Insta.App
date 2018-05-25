@@ -1,19 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Navbar } from 'react-bootstrap';
 
 class Header extends React.Component {
     render() {
         return (
-            <Navbar>
+            <Navbar className="navbar-insta">
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        Code9 App
+                    <Navbar.Brand className="navbar-brand-insta">
+                        Code9 Insta
                     </Navbar.Brand>
                 </Navbar.Header>
             </Navbar>
         );
     }
 }
-
 export default Header;

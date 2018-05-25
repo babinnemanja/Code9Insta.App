@@ -1,15 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Glyphicon, FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class CommentForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         const { post, comment, onCommentChange, onCommentSubmit, submitted } = this.props;
         const { id } = post;
-        console.log("Form: ", id, post);
         return (
             <div>
                 <form onSubmit={(e) => onCommentSubmit(e, id)}>
@@ -21,7 +16,15 @@ class CommentForm extends React.Component {
                             onChange={onCommentChange}
                         />
                     </FormGroup>
-                    <Button type="submit" disabled={submitted}>Add</Button>
+                    <Button
+                        type="submit"
+                        disabled={submitted}
+                        bsStyle="link"
+                        bsSize="small"
+                        className="pull-right"
+                    >
+                        <Glyphicon glyph="plus" />
+                    </Button>
                 </form>
             </div>
         );

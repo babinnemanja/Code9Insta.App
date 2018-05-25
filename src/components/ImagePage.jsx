@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
 import { serviceConfig } from '../appSettings';
-import { Panel, Button } from 'react-bootstrap';
+import { Glyphicon, Navbar, Panel, Button } from 'react-bootstrap';
 import _ from 'lodash';
-import Image from './Image';
+import ImageView from './ImageView';
 import CommentForm from './CommentForm'
 
 class ImagePage extends React.Component {
@@ -43,7 +42,6 @@ class ImagePage extends React.Component {
     }
     handleCommentChange(e) {
         const { id, value } = e.target;
-        console.log("Change: ", id, value);
         this.setState({ [id]: value });
     }
     loadImage(id) {
@@ -123,7 +121,6 @@ class ImagePage extends React.Component {
     }
     loadComments(id) {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log("loadComments",id);
 
         const requestOptions = {
             method: 'GET',
@@ -141,7 +138,6 @@ class ImagePage extends React.Component {
             })
             .then(data => {
                 if (data) {
-                    console.log("Data comments: ", data);
                     this.setState({ comments: data });
                 }
             })
@@ -182,7 +178,7 @@ class ImagePage extends React.Component {
     }
     deleteComment(id, commentId) {
         const user = JSON.parse(localStorage.getItem('user'));
-        
+
         const requestOptions = {
             method: 'DELETE',
             headers: {
@@ -206,42 +202,62 @@ class ImagePage extends React.Component {
             });
     }
     renderComments(id, comments) {
-        return _.map(comments, (comment, index) => (
-            <Panel key={index}>
-                <Panel.Heading>
-                    <Button bsStyle="default" onClick={() => this.deleteComment(id, comment.id)}>Delete</Button>
-                </Panel.Heading>
+        console.log("Comments:", comments);
+        return (
+            <Panel className="comments-insta">
                 <Panel.Body>
-                    {comment.text}
+                    <h4>comments</h4>
+                    <hr/>
+                    {_.map(comments, (comment, index) => (
+                        <p key={index}>
+                            <span><strong>{comment.handle}</strong>:&nbsp;</span>
+                            {comment.text}
+                            <Button bsStyle="link" bsSize="small" className="pull-right" onClick={() => this.deleteComment(id, comment.id)}>
+                                <Glyphicon glyph="trash" />
+                            </Button>
+                        </p>
+                    ))}
                 </Panel.Body>
             </Panel>
-        ));
+        );
     }
     render() {
         const { post, comments, comment, deleted, submitted } = this.state;
-        
+
+        if (!post || !post.imageData) {
+            return (<div className="loader"></div>);
+        }
+        console.log("Studd:", this.state);
         return (
-            <Panel>
-                <Panel.Heading>
-                    <Button bsStyle="default" onClick={this.handleBackClick}>Back</Button>
-                </Panel.Heading>
-                <Panel.Body>
-                    <Image
+            <div>
+                <Navbar className="navbar-insta">
+                    <Navbar.Header>
+                        <Button bsStyle="link" bsSize="large" className="back-btn-insta" onClick={this.handleBackClick}>
+                            <Glyphicon glyph="chevron-left" />
+                        </Button>
+                    </Navbar.Header>
+                </Navbar>
+                <div>
+                    <ImageView
                         post={post}
                         deleted={deleted}
                         onLikeClick={(id) => this.handleLikeClick(id)}
                         onDeleteClick={(id) => this.handleDeleteClick(id)}
                     />
-                    <CommentForm
-                        post={post}
-                        comment={comment}
-                        submitted={submitted}
-                        onCommentChange={this.handleCommentChange}
-                        onCommentSubmit={(e, id) => this.handleCommentSubmit(e, id)}
-                    />
+                    <Panel className="comments-insta">
+                        <Panel.Body>
+                            <CommentForm
+                                post={post}
+                                comment={comment}
+                                submitted={submitted}
+                                onCommentChange={this.handleCommentChange}
+                                onCommentSubmit={(e, id) => this.handleCommentSubmit(e, id)}
+                            />
+                        </Panel.Body>
+                    </Panel>
                     {this.renderComments(post.id, comments)}
-                </Panel.Body>
-            </Panel>
+                </div>
+            </div>
         );
     }
 }

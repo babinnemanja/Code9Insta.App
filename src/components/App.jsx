@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
@@ -23,5 +22,4 @@ class App extends React.Component {
         );
     }
 }
-
 export default App;

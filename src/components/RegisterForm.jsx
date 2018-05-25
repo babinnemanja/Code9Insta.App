@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { serviceConfig } from '../appSettings';
@@ -51,7 +50,7 @@ class RegisterForm extends React.Component {
             body: JSON.stringify(data)
         };
 
-        fetch(`${serviceConfig.baseURL}/profile`, requestOptions)
+        fetch(`${serviceConfig.baseURL}/profiles`, requestOptions)
             .then(response => {
                 if (!response.ok) {
                     return Promise.reject(response);
@@ -71,6 +70,7 @@ class RegisterForm extends React.Component {
         const { username, email, password, submitted } = this.state;
         return (
             <div>
+                <h1 className="form-header">Code9Insta</h1>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <FormControl
@@ -99,7 +99,7 @@ class RegisterForm extends React.Component {
                             onChange={this.handleChange}
                         />
                     </FormGroup>
-                    <Button type="submit" disabled={submitted}>Register</Button>
+                    <Button type="submit" disabled={submitted} className="btn-insta" block>Sign up</Button>
                 </form>
             </div>
         );

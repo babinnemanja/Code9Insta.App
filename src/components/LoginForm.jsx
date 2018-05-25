@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { FormGroup, FormControl, Button } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { serviceConfig } from '../appSettings';
@@ -34,7 +33,7 @@ class LoginForm extends React.Component {
     login() {
         const { username, password } = this.state;
 
-        fetch(`${serviceConfig.baseURL}/token/request?username=${username}&password=${password}`)
+        fetch(`${serviceConfig.baseURL}/tokens/request?username=${username}&password=${password}`)
             .then(response => {
                 if (!response.ok) {
                     return Promise.reject(response);
@@ -56,6 +55,7 @@ class LoginForm extends React.Component {
         const { username, password, submitted } = this.state;
         return (
             <div>
+                <h1 className="form-header">Code9Insta</h1>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <FormControl
@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
                             onChange={this.handleChange}
                         />
                     </FormGroup>
-                    <Button type="submit" disabled={submitted}>Login</Button>
+                    <Button type="submit" disabled={submitted} className="btn-insta" block>Login</Button>
                 </form>
             </div>
         );

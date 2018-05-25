@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { NotificationManager } from 'react-notifications';
 import { serviceConfig } from '../appSettings';
 import HeaderSearch from './HeaderSearch';
@@ -37,7 +36,6 @@ class ProfilePage extends React.Component {
             })
             .then(data => {
                 if (data) {
-                    console.log("Data: ", data);
                     this.setState({ posts: data });
                 }
             })

@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { Glyphicon, Navbar, Nav, NavItem, FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class HeaderSearch extends React.Component {
     constructor(props) {
@@ -10,6 +10,7 @@ class HeaderSearch extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePostPageClick = this.handlePostPageClick.bind(this);
     }
     handleChange(e) {
         const { id, value } = e.target;
@@ -20,22 +21,33 @@ class HeaderSearch extends React.Component {
         const { text } = this.state;
         this.props.onSearch(text);
     }
+    handlePostPageClick(e) {
+        e.preventDefault();
+        this.props.history.push("post");
+    }
     render() {
         return (
-            <Navbar>
+            <Navbar className="navbar-insta">
                 <Navbar.Header>
-                    <Navbar.Brand>
+                    <Navbar.Brand className="navbar-brand-insta">
                         Code9 App
                     </Navbar.Brand>
                 </Navbar.Header>
-                <Navbar.Form pullLeft onSubmit={this.handleSubmit}>
+                <Navbar.Form pullLeft>
                     <FormGroup>
-                        <FormControl id="text" type="text" placeholder="Search" />
+                        <FormControl id="text" type="text" placeholder="Search" onChange={this.handleChange} />
                     </FormGroup>{' '}
-                    <Button type="submit">Search</Button>
+                    <Button bsStyle="link" onClick={this.handleSubmit}>
+                        <Glyphicon glyph="search" />
+                    </Button>
                 </Navbar.Form>
+                <Nav pullRight>
+                    <NavItem href="#" onClick={this.handlePostPageClick}>
+                        <Glyphicon glyph="upload" />
+                    </NavItem>
+                </Nav>
             </Navbar>
         );
     }
 }
-export default HeaderSearch;
+export default withRouter(HeaderSearch);
